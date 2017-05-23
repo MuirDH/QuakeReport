@@ -10,32 +10,37 @@ package com.example.android.quakereport;
 public class Earthquake {
 
     // Magnitude of the earthquake
-    private String Magnitude;
+    private double Magnitude;
 
     // Location of the earthquake
     private String Location;
 
     // Date of the earthquake
-    private String Date;
+    private long TimeInMilliseconds;
+
+    // Website URL of the earthquake
+    private  String Url;
 
     /**
      * Constructs a new {@link Earthquake} object.
      * @param magnitude is the size of the earthquake.
      * @param location is the city where the earthquake happened
-     * @param date is when the earthquake happened.
+     * @param timeInMilliseconds is when the earthquake happened.
+     * @param url is the website URL to find more details about the earthquake
      */
 
-    public Earthquake(String magnitude, String location, String date){
+    public Earthquake(double magnitude, String location, long timeInMilliseconds, String url){
 
         Magnitude = magnitude;
         Location = location;
-        Date = date;
+        TimeInMilliseconds = timeInMilliseconds;
+        Url = url;
 
     }
 
     // Getter methods to return the magnitude, location, and date of the earthquake.
 
-    public String getMagnitude(){
+    public double getMagnitude(){
         return Magnitude;
     }
 
@@ -43,8 +48,12 @@ public class Earthquake {
         return Location;
     }
 
-    public String getDate(){
-        return Date;
+    public long getTimeInMilliseconds(){
+        return TimeInMilliseconds;
+    }
+
+    public String getUrl(){
+        return Url;
     }
 
 }

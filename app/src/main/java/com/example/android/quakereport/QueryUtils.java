@@ -76,7 +76,7 @@ public final class QueryUtils {
                 // Extract "url2 to get the url
                 String url = properties.getString("url");
 
-                // Create Earthquake java object from magnitude, location, and time
+                // Create Earthquake java object from magnitude, location, time, and url
                 Earthquake earthquake = new Earthquake(magnitude, location, time, url);
 
                 // Add earthquake to list of earthquakes

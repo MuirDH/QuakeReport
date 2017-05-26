@@ -10,16 +10,16 @@ package com.example.android.quakereport;
 public class Earthquake {
 
     // Magnitude of the earthquake
-    private double Magnitude;
+    public double Magnitude;
 
     // Location of the earthquake
-    private String Location;
+    public String Location;
 
     // Date of the earthquake
-    private long TimeInMilliseconds;
+    public long TimeInMilliseconds;
 
     // Website URL of the earthquake
-    private  String Url;
+    public String Url;
 
     /**
      * Constructs a new {@link Earthquake} object.

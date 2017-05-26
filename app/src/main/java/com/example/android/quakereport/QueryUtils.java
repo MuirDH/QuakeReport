@@ -21,16 +21,16 @@ import java.util.List;
 // Utility class with methods to help perform the HTTP request and parse the response
 public final class QueryUtils {
 
-   // Tag for the log messages
-   public static final String LOG_TAG = QueryUtils.class.getSimpleName();
+    // Tag for the log messages
+    public static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
 
     // Returns new URL object from the given string URL
-    private static URL createUrl(String stringUrl){
+    private static URL createUrl(String stringUrl) {
         URL url = null;
         try {
             url = new URL(stringUrl);
-        } catch (MalformedURLException e){
+        } catch (MalformedURLException e) {
             Log.e(LOG_TAG, "Problem building the URL ", e);
         }
         return url;
@@ -41,7 +41,7 @@ public final class QueryUtils {
         String jsonResponse = "";
 
         // If the URL is null, then return early.
-        if (url == null){
+        if (url == null) {
             return jsonResponse;
         }
 
@@ -58,16 +58,16 @@ public final class QueryUtils {
              * If the request was successful (response code 200), then read the input stream and
              * parse the response.
              */
-            if (urlConnection.getResponseCode() == 200){
+            if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
-            }else {
+            } else {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results.", e);
-        }finally {
-            if (urlConnection != null){
+        } finally {
+            if (urlConnection != null) {
                 urlConnection.disconnect();
             }
             if (inputStream != null)
@@ -80,17 +80,18 @@ public final class QueryUtils {
     /**
      * Convert the {@link InputStream} into a String which contains the whole JSON response from the
      * server.
-     * @param inputStream
+     *
+     * @param inputStream is the JSON response
      * @return output.toString()
      */
     private static String readFromStream(InputStream inputStream) throws IOException {
         StringBuilder output = new StringBuilder();
-        if (inputStream != null){
+        if (inputStream != null) {
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream,
                     Charset.forName("UTF-8"));
             BufferedReader reader = new BufferedReader(inputStreamReader);
             String line = reader.readLine();
-            while (line != null){
+            while (line != null) {
                 output.append(line);
                 line = reader.readLine();
             }
@@ -130,7 +131,7 @@ public final class QueryUtils {
             /**
              * for each earthquake in the earthquakeArray, create an {@link Earthquake} object.
              */
-            for (int i = 0; i < earthquakeArray.length(); i++){
+            for (int i = 0; i < earthquakeArray.length(); i++) {
 
                 //Get earthquake JSONObject at position i
                 JSONObject currentEarthquake = earthquakeArray.getJSONObject(i);
@@ -177,13 +178,20 @@ public final class QueryUtils {
 
     /**
      * Query the USGS dataset and return a list of {@link Earthquake} objects.
-     * @param requestUrl
+     *
+     * @param requestUrl is the URL we are requesting data from
      * @return earthquakes
      */
-    public static List<Earthquake> fetchEarthquakeData(String requestUrl){
+    public static List<Earthquake> fetchEarthquakeData(String requestUrl) {
 
         Log.i(LOG_TAG, "TEST: fetchEarthquakeData() called...");
-        
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         // Create URL object
         URL url = createUrl(requestUrl);
 
@@ -191,7 +199,7 @@ public final class QueryUtils {
         String jsonResponse = null;
         try {
             jsonResponse = makeHttpRequest(url);
-        } catch (IOException e){
+        } catch (IOException e) {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
 

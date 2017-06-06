@@ -43,7 +43,7 @@ public class EarthquakeActivity extends AppCompatActivity
         implements LoaderCallbacks<List<Earthquake>> {
 
     private static final String USGS_REQUST_URL =
-            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=1&limit=20";
+            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=2&limit=20";
     /*
      * constant value for the earthquake loader ID. We can choose any integer. This really only
      * comes into play if you're using multiple loaders.
@@ -141,16 +141,16 @@ public class EarthquakeActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.actions_settings){
+        if (id == R.id.actions_settings) {
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
             startActivity(settingsIntent);
             return true;

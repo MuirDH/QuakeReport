@@ -171,6 +171,15 @@ public class EarthquakeActivity extends AppCompatActivity
                 getString(R.string.settings_min_magnitude_key),
                 getString(R.string.settings_min_magnitude_default));
 
+        //Read from SharedPreferences and check for the value associated with the key:
+        //getString(R.string.settings_order_by_key). When building the URI and appending query
+        // parameters, instead of hardcoding the "orderby" parameter to be "time", we will use the
+        // user's preference (stored in the orderBy variable
+        String orderBy = sharedPreferences.getString(
+                getString(R.string.settings_order_by_key),
+                getString(R.string.settings_order_by_default)
+        );
+
         Uri baseUri = Uri.parse(USGS_REQUST_URL);
 
         Uri.Builder uriBuilder = baseUri.buildUpon();
@@ -178,9 +187,10 @@ public class EarthquakeActivity extends AppCompatActivity
         uriBuilder.appendQueryParameter("format", "geojson");
         uriBuilder.appendQueryParameter("limit", "10");
         uriBuilder.appendQueryParameter("minmag", minMagnitude);
-        uriBuilder.appendQueryParameter("orderby", "time");
+        uriBuilder.appendQueryParameter("orderby", orderBy);
 
         return new EarthquakeLoader(this, uriBuilder.toString());
+
     }
 
     @Override

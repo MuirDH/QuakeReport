@@ -2,6 +2,7 @@ package com.example.android.quakereport;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -33,6 +34,14 @@ public class SettingsActivity extends AppCompatActivity {
 
             Preference minMagnitude = findPreference(getString(R.string.settings_min_magnitude_key));
             bindPreferenceSummaryToValue(minMagnitude);
+
+            // Add additional logic so that the EarthquakePreferenceFragment is aware of the new
+            // ListPreference. Find the "order by" Preference object according to its key. Call
+            // the bindPreferenceSummaryToValue() helper method on this object, which will set this
+            // fragment as the OnPreferenceChangeListener and update the summary so that it displays
+            // the current value stored in SharedPreferences
+            Preference orderBy = findPreference(getString(R.string.settings_order_by_key));
+            bindPreferenceSummaryToValue(orderBy);
 
         }
 
@@ -69,7 +78,20 @@ public class SettingsActivity extends AppCompatActivity {
         public boolean onPreferenceChange(Preference preference, Object value) {
 
             String stringValue = value.toString();
-            preference.setSummary(stringValue);
+
+            //Update the onPreferenceChange() method to properly update the summary of a
+            //ListPreference (using the label, instead of the key).
+            if (preference instanceof ListPreference) {
+                ListPreference listPreference = (ListPreference) preference;
+                int prefIndex = listPreference.findIndexOfValue(stringValue);
+
+                if (prefIndex >= 0) {
+                    CharSequence[] labels = listPreference.getEntries();
+                    preference.setSummary(labels[prefIndex]);
+                }
+            } else {
+                preference.setSummary(stringValue);
+            }
 
             return true;
         }
